@@ -1,0 +1,11 @@
+name: t501
+vendor: 0x08f2
+product: 0x6811
+
+pen:
+  max_x: 4096
+  max_y: 4096
+  resolution_x: 24
+  resolution_y: 15
+  max_pressure: 1500
+  min_pressure: 722
