@@ -9,3 +9,6 @@ pen:
   resolution_y: 15
   max_pressure: 1500
   min_pressure: 722
+  inverse_x: true
+  inverse_y: true
+  swap_xy: false

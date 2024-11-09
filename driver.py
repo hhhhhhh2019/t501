@@ -70,6 +70,11 @@ for i in [0, 1, 2]:  # we need detach all interfaces
 tablet.set_configuration()
 
 
+if config["pen"]["swap_xy"]:
+    config["pen"]["resolution_x"], config["pen"]["resolution_y"] =\
+        config["pen"]["resolution_y"], config["pen"]["resolution_x"]
+
+
 pen_events = {
     ecodes.EV_KEY: [
         ecodes.BTN_TOOL_PEN,
@@ -85,7 +90,7 @@ pen_events = {
 
 
 buttons = {
-    "E":         [ecodes.KEY_MUTE],
+    "E":         [ecodes.KEY_E],
     "B":         [ecodes.KEY_B],
     "C-":        [ecodes.KEY_LEFTCTRL, ecodes.KEY_KPMINUS],
     "C+":        [ecodes.KEY_LEFTCTRL, ecodes.KEY_KPPLUS],
@@ -138,10 +143,24 @@ while True:
         pressure_raw = data[5] * 256 + data[6]
         stylus_button = data[9]
 
+        raw_x, raw_y = x, y
+
         buttons_raw = data[11:13]
 
+        if config["pen"]["swap_xy"]:
+            x, y = y, x
+
+        if config["pen"]["inverse_x"]:
+            x = config["pen"]["max_x"] - x
+
+        if config["pen"]["inverse_y"]:
+            y = config["pen"]["max_y"] - y
+
         if pressure_raw < config["pen"]["max_pressure"]:
-            pressure = min(1000, floor((config["pen"]["max_pressure"] - pressure_raw) / config["pen"]["min_pressure"] * 1000))
+            pressure = min(1000, floor(
+                (config["pen"]["max_pressure"] - pressure_raw) /
+                config["pen"]["min_pressure"] * 1000
+            ))
 
             pen.write(ecodes.EV_KEY, ecodes.BTN_TOOL_PENCIL, 1)
         else:
@@ -162,9 +181,20 @@ while True:
         press(buttons["ctrl"],      int((data[11] & 0b00001000) == 0))
         press(buttons["alt"],       int((data[11] & 0b00000100) == 0))
 
+        press(buttons["mute"],      int(pressure != 0 and raw_y > 60000 and raw_x == 200))
+        press(buttons["vol-"],      int(pressure != 0 and raw_y > 60000 and raw_x == 609))
+        press(buttons["vol+"],      int(pressure != 0 and raw_y > 60000 and raw_x == 1018))
+        press(buttons["music"],     int(pressure != 0 and raw_y > 60000 and raw_x == 1427))
+        press(buttons["playpause"], int(pressure != 0 and raw_y > 60000 and raw_x == 1836))
+        press(buttons["prev"],      int(pressure != 0 and raw_y > 60000 and raw_x == 2245))
+        press(buttons["next"],      int(pressure != 0 and raw_y > 60000 and raw_x == 2654))
+        press(buttons["home"],      int(pressure != 0 and raw_y > 60000 and raw_x == 3063))
+        press(buttons["calc"],      int(pressure != 0 and raw_y > 60000 and raw_x == 3472))
+        press(buttons["desk"],      int(pressure != 0 and raw_y > 60000 and raw_x == 3881))
+
         # print(list(map(lambda x: bin(x)[2:].zfill(8), buttons_raw)))
         # print(data)
-        print(x, y, pressure, stylus_button)
+        # print(x, y, pressure, stylus_button)
 
         if stylus_button == 4:
             pen.write(ecodes.EV_KEY, ecodes.BTN_STYLUS, 1)
