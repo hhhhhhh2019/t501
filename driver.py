@@ -77,9 +77,9 @@ if config["pen"]["swap_xy"]:
 
 pen_events = {
     ecodes.EV_KEY: [
-        ecodes.BTN_TOOL_PEN,
-        ecodes.BTN_STYLUS,
-        ecodes.BTN_STYLUS2,
+        ecodes.ecodes[config["pen"]["touch_key"]],
+        ecodes.ecodes[config["pen"]["button1"]],
+        ecodes.ecodes[config["pen"]["button2"]],
     ],
     ecodes.EV_ABS: [
             (ecodes.ABS_X, AbsInfo(0, 0, config["pen"]["max_x"], 0, 0, config["pen"]["resolution_x"])),
@@ -90,29 +90,29 @@ pen_events = {
 
 
 buttons = {
-    "E":         [ecodes.KEY_E],
-    "B":         [ecodes.KEY_B],
-    "C-":        [ecodes.KEY_LEFTCTRL, ecodes.KEY_KPMINUS],
-    "C+":        [ecodes.KEY_LEFTCTRL, ecodes.KEY_KPPLUS],
-    "[":         [ecodes.KEY_LEFTBRACE],
-    "]":         [ecodes.KEY_RIGHTBRACE],
-    "mouseup":   [ecodes.KEY_LEFTCTRL, ecodes.KEY_Z],
-    "tab":       [ecodes.KEY_TAB],
-    "mousedown": [ecodes.KEY_LEFTCTRL, ecodes.KEY_LEFTSHIFT, ecodes.KEY_Z],
-    "space":     [ecodes.KEY_SPACE],
-    "ctrl":      [ecodes.KEY_LEFTCTRL],
-    "alt":       [ecodes.KEY_LEFTALT],
+    "E":         [ecodes.ecodes[i] for i in config["buttons"][0].split("+")],
+    "B":         [ecodes.ecodes[i] for i in config["buttons"][1].split("+")],
+    "C-":        [ecodes.ecodes[i] for i in config["buttons"][2].split("+")],
+    "C+":        [ecodes.ecodes[i] for i in config["buttons"][3].split("+")],
+    "[":         [ecodes.ecodes[i] for i in config["buttons"][4].split("+")],
+    "]":         [ecodes.ecodes[i] for i in config["buttons"][5].split("+")],
+    "mouseup":   [ecodes.ecodes[i] for i in config["buttons"][6].split("+")],
+    "tab":       [ecodes.ecodes[i] for i in config["buttons"][7].split("+")],
+    "mousedown": [ecodes.ecodes[i] for i in config["buttons"][8].split("+")],
+    "space":     [ecodes.ecodes[i] for i in config["buttons"][9].split("+")],
+    "ctrl":      [ecodes.ecodes[i] for i in config["buttons"][10].split("+")],
+    "alt":       [ecodes.ecodes[i] for i in config["buttons"][11].split("+")],
 
-    "mute":      [ecodes.KEY_MUTE],
-    "vol+":      [ecodes.KEY_VOLUMEUP],
-    "vol-":      [ecodes.KEY_VOLUMEDOWN],
-    "music":     [ecodes.KEY_MEDIA],
-    "playpause": [ecodes.KEY_PLAYPAUSE],
-    "prev":      [ecodes.KEY_PREVIOUSSONG],
-    "next":      [ecodes.KEY_NEXTSONG],
-    "home":      [ecodes.KEY_HOME],
-    "calc":      [ecodes.KEY_CALC],
-    "desk":      [ecodes.KEY_BUTTONCONFIG],
+    "mute":      [ecodes.ecodes[i] for i in config["buttons"][12].split("+")],
+    "vol+":      [ecodes.ecodes[i] for i in config["buttons"][13].split("+")],
+    "vol-":      [ecodes.ecodes[i] for i in config["buttons"][14].split("+")],
+    "music":     [ecodes.ecodes[i] for i in config["buttons"][15].split("+")],
+    "playpause": [ecodes.ecodes[i] for i in config["buttons"][16].split("+")],
+    "prev":      [ecodes.ecodes[i] for i in config["buttons"][17].split("+")],
+    "next":      [ecodes.ecodes[i] for i in config["buttons"][18].split("+")],
+    "home":      [ecodes.ecodes[i] for i in config["buttons"][19].split("+")],
+    "calc":      [ecodes.ecodes[i] for i in config["buttons"][20].split("+")],
+    "desk":      [ecodes.ecodes[i] for i in config["buttons"][21].split("+")],
 }
 
 btn_events = {
@@ -197,14 +197,14 @@ while True:
         # print(x, y, pressure, stylus_button)
 
         if stylus_button == 4:
-            pen.write(ecodes.EV_KEY, ecodes.BTN_STYLUS, 1)
+            pen.write(ecodes.EV_KEY, ecodes.ecodes[config["pen"]["button1"]], 1)
         else:
-            pen.write(ecodes.EV_KEY, ecodes.BTN_STYLUS, 0)
+            pen.write(ecodes.EV_KEY, ecodes.ecodes[config["pen"]["button1"]], 0)
 
         if stylus_button == 6:
-            pen.write(ecodes.EV_KEY, ecodes.BTN_STYLUS2, 1)
+            pen.write(ecodes.EV_KEY, ecodes.ecodes[config["pen"]["button2"]], 1)
         else:
-            pen.write(ecodes.EV_KEY, ecodes.BTN_STYLUS2, 0)
+            pen.write(ecodes.EV_KEY, ecodes.ecodes[config["pen"]["button2"]], 0)
 
         pen.write(ecodes.EV_ABS, ecodes.ABS_X, x)
         pen.write(ecodes.EV_ABS, ecodes.ABS_Y, y)

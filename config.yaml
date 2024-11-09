@@ -9,6 +9,36 @@ pen:
   resolution_y: 15
   max_pressure: 1500
   min_pressure: 722
-  inverse_x: true
-  inverse_y: true
+  inverse_x: false
+  inverse_y: false
   swap_xy: false
+
+  touch_key: BTN_TOOL_PEN
+  button1: BTN_STYLUS
+  button2: BTN_STYLUS2
+
+
+buttons:
+  - KEY_E
+  - KEY_B
+  - KEY_LEFTCTRL+KEY_KPMINUS
+  - KEY_LEFTCTRL+KEY_KPPLUS
+  - KEY_LEFTBRACE
+  - KEY_RIGHTBRACE
+  - KEY_LEFTCTRL+KEY_Z
+  - KEY_TAB
+  - KEY_LEFTCTRL+KEY_LEFTSHIFT+KEY_Z
+  - KEY_SPACE
+  - KEY_LEFTCTRL
+  - KEY_LEFTALT
+
+  - KEY_MUTE
+  - KEY_VOLUMEUP
+  - KEY_VOLUMEDOWN
+  - KEY_MEDIA
+  - KEY_PLAYPAUSE
+  - KEY_PREVIOUSSONG
+  - KEY_NEXTSONG
+  - KEY_HOME
+  - KEY_CALC
+  - KEY_BUTTONCONFIG
