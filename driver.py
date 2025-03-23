@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import usb
 import yaml
 from evdev import UInput, ecodes, AbsInfo

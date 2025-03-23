@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idProduct}=="6811", ATTRS{idVendor}=="08f2", RUN+="/opt/t501/test.sh"
